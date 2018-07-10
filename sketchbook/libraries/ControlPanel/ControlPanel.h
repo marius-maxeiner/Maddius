@@ -41,7 +41,7 @@ class Button {
 };
 
 /*
-*
+* Mouse Like Joystik
 *
 */
 class JoyStick {
@@ -98,7 +98,6 @@ class JoyStick {
     reading = map(reading, 0, 1023, 0, range);
     // if the output reading is outside from the rest position threshold, use it:
     int distance = reading - center;
-
     if (abs(distance) < _threshold) {
       distance = 0;
     }
@@ -171,16 +170,17 @@ class Fader{
   byte _motorDownPin;
 };
 
+/*
+* Idea for a centalised logic layer for 
+* the out and incoming signals 
+*
+*/
 class ControlPanel
 {
   public:
     ControlPanel(Control control[], byte controlCount);
     // void syncControls();
-    /*void dot();
-    void dash();*/
-  // private:
-    Control _control[64];
-    byte _controlCount;
+    Control* _control[64];
 };
 
 
