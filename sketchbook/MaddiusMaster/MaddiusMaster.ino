@@ -1,14 +1,18 @@
+//This is the Code for the Maddius Main Controller, built by Marius and Eddie.
+//We hope you have fun editing and using this Code for yourself.
 
 
 
+//________Including Library´s____________
 #include <Wire.h> // I2C
 #include <ClickEncoder.h>
 #include <TimerOne.h>
+#include <ControlPanel.h>
 
-#include <ControlPanel.h> // own libary
-
+//________Setting Defines________________
 #define DEVMODE true
 
+//________Setting Pins___________________
 //MotorA motor1(3, 4, 2);
 Button button1(49);
 Button button2(50);
@@ -27,16 +31,16 @@ JoyStick* joy1;
 void setup() {
   encoder = new ClickEncoder(A20, A19, A18);
   joy1 =  new JoyStick(A17,A16);
-  // put your setup code here, to run once
   if (DEVMODE) {
     pinMode(LED_BUILTIN, OUTPUT);
     pinMode(LED_BUILTIN, INPUT_PULLUP);
     pinMode(52, OUTPUT);
-    Serial.begin(57600); // start serial for output
+    // ___SERIAL_BEGIN____
+    Serial.begin(57600);
     // Serial.println("Start Maddius Master");
   }
 
-  // Init Midi read functions
+  // __Init Midi read functions__
   usbMIDI.setHandleNoteOff(myNoteOff);
   usbMIDI.setHandleNoteOn(myNoteOn);
   usbMIDI.setHandleAfterTouchPoly(myAfterTouchPoly);
