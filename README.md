@@ -1,6 +1,5 @@
 # Maddius
-______________________English________________________
-
+_English:_
 ALPHA
 
 
@@ -22,7 +21,7 @@ Greetings, Marius & Eddie.
 
 
 
-______________________German________________________
+_German:_
 
 ALPHA
 
