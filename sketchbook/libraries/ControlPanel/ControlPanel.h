@@ -151,9 +151,7 @@ class Fader{
   short _newMid;
   short _faderSpeed;
   Motor* _motor;
-
   short _valueTarget;
-  // 
   bool _touched;
   bool _humanChanged;
   Fader(byte analogPin, byte touchPin, Motor* motor);
