@@ -1,0 +1,8 @@
+Maddius Main.
+
+The Maddius Main is the Heartpiece of the Maddius Family.
+
+It features 9 motorized fader, 8 Channelfader and 1 Masterfader.
+Also it comes with 8 Blind buttons and 1 blackout button.
+
+The Maddius Main works as the converter to midi, the built in Teensy will controll the expansions over and i2c connection, featuring around 124 address Ports. This allows to connect any kind of Microcontroller with analog or digital I/O Pins. 
