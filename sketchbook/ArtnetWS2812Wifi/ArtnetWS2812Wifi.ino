@@ -25,7 +25,7 @@ uint8_t uniData[510];
 uint16_t uniSize;
 uint8_t hData[ARTNET_HEADER + 1];
 uint8_t net = 0;
-uint8_t universe = 12;
+uint8_t universe = 22;
 uint8_t subnet = 0;
 
 // Mode

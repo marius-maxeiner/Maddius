@@ -35,6 +35,49 @@ void MotorA::motorStop()
     digitalWrite(_motorDownIOPin, LOW);
 }
 
+MotorB::MotorB(byte motorUpIOPin, byte motorDownIOPin, byte motorSpeedPWM, byte motorStandby){
+    _motorUpIOPin = motorUpIOPin;
+    _motorDownIOPin = motorDownIOPin;
+    _motorSpeedPWM = motorSpeedPWM;
+    _motorStandby = motorStandby;
+    _speed = 0;
+    pinMode(_motorStandby, OUTPUT);
+    pinMode(_motorUpIOPin, OUTPUT);
+    pinMode(_motorDownIOPin, OUTPUT);
+}
+
+void MotorB::setSpeed(byte speed)
+{
+    // Serial.print("Motor setSpeed:");
+    // Serial.println(speed);
+    _speed = speed;
+    analogWrite(_motorSpeedPWM , speed);
+}
+
+void MotorB::motorUp()
+{
+    Serial.println("Motor motorUp");
+    digitalWrite(_motorStandby, HIGH);
+    digitalWrite(_motorUpIOPin, HIGH);
+    digitalWrite(_motorDownIOPin, LOW);
+}
+
+void MotorB::motorDown()
+{
+    Serial.println("Motor motorDown");
+    digitalWrite(_motorStandby, HIGH);
+    digitalWrite(_motorUpIOPin, LOW);
+    digitalWrite(_motorDownIOPin, HIGH);
+}
+
+void MotorB::motorStop()
+{
+    setSpeed(0);
+    digitalWrite(_motorStandby, LOW);
+    digitalWrite(_motorUpIOPin, LOW);
+    digitalWrite(_motorDownIOPin, LOW);
+}
+
 
 MotorPWM::MotorPWM(byte motorUpPWM, byte motorDownPWM){
     _motorUpPWM = motorUpPWM;
@@ -66,7 +109,7 @@ void MotorPWM::motorStop()
 }
 
 
-Fader::Fader(byte analogPin, byte touchPin, Motor *motor)//  byte motorUpPin, byte motorDownPin 
+Fader::Fader(byte analogPin, byte touchPin, Motor *motor)//   byte motorUpPin, byte motorDownPin 
 {
     _analogPin = analogPin;
     _touchPin = touchPin;
@@ -75,6 +118,26 @@ Fader::Fader(byte analogPin, byte touchPin, Motor *motor)//  byte motorUpPin, by
     // _lastValues = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     _lastValueCount = 0;
     _startTouch = readTouch();
+   /* delay(2000);
+    Serial.println("Nstarrt");
+    _motor->setSpeed(200);
+ 
+
+    delay(2000);
+    _motor->setSpeed(200);
+    Serial.println("down");
+    _motor->motorDown();
+    delay(2000);
+    Serial.println("stop");
+    _motor->motorStop();
+    delay(2000);
+    _motor->setSpeed(200);
+    Serial.println("up");
+    _motor->motorUp();
+    delay(2000);
+    Serial.println("stop");
+    _motor->motorStop();
+    delay(60000);*/
 }
 
 short Fader::readAnalog()
@@ -87,7 +150,7 @@ short Fader::readTouch()
 /*     #if CHIPSET == ARDUINO_NANO
        return 0;
     #else */
-        return touchRead(_touchPin);
+      //  return touchRead(_touchPin);
    // #endif
 }
 
@@ -133,32 +196,33 @@ short Fader::update()
     if(!_humanChanged){
         
     }
-    if ((_valueTarget <= newValue + 20
-        && _valueTarget >= newValue - 20) || _humanChanged){
+    if ((_valueTarget <= newValue + 40
+        && _valueTarget >= newValue - 40) || _humanChanged){
         _motor->motorStop();
+        // Serial.println("Motor Stop");
     }else if (!_humanChanged){
         int distance = abs(_valueTarget - newValue);
-/*         Serial.println("N");
-        Serial.println(newValue);
-        Serial.println(_valueTarget);
-        Serial.println(distance); */
-        int speed = 140;
+        byte speed = 0;
         // map(distance, 0, 1023, 130, 255);
         // Serial.println(speed);
-        _motor->setSpeed(speed);
-        if(distance > 500){
-            _motor->setSpeed(255);
-        }else if(distance > 400){
-            _motor->setSpeed(200);
-        }else if(distance > 300){
-            _motor->setSpeed(150);
-        }else if(distance > 200){
-            _motor->setSpeed(150);
-        }else if(distance > 100){
-            _motor->setSpeed(140);
-        }else{
-            _motor->setSpeed(140);
+        // _motor->setSpeed(speed);
+        /*if(distance > 300){
+            speed = 150;
+        }else if(distance > 160){
+            speed = 145;
+        }else if(distance > 80){
+            speed = 140;
+        }else
+         if(distance > 120){
+            speed = 125;
+        }else*/ if(distance > 10){
+            //speed = 255;
+            speed = 128;
+        }else {
+            speed = 0;
         }
+
+        _motor->setSpeed(speed);
         if (newValue > _valueTarget) {
             //_motor->setSpeed(180);
             _motor->motorDown();
@@ -166,6 +230,15 @@ short Fader::update()
             //_motor->setSpeed(180);
             _motor->motorUp();
         }
+
+        Serial.print("New:");
+        Serial.println(newValue);
+        Serial.print("Target:");
+        Serial.println(_valueTarget);
+        Serial.print("Distance:");
+        Serial.println(distance);
+        Serial.print("Speed:");
+        Serial.println(speed);
     }
     // Erst nach X Zyklen Ändern ??
     _lastMid = newValue;

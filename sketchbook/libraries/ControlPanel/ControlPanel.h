@@ -131,6 +131,22 @@ class MotorA : public Motor{
   void motorStop();
 };
 
+class MotorB : public Motor{
+  private:
+  public:
+  byte _motorUpIOPin;
+  byte _motorDownIOPin;
+  byte _motorSpeedPWM;
+  byte _motorStandby;
+  byte _speed;
+  
+  MotorB(byte motorUpIOPin, byte motorDownIOPin, byte motorSpeedPWM, byte motorStandby);
+  void setSpeed(byte speed);
+  void motorUp();
+  void motorDown();
+  void motorStop();
+};
+
 class MotorPWM : public Motor {
   public:
   byte _motorUpPWM;
@@ -155,7 +171,7 @@ class Fader{
   bool _touched;
   bool _humanChanged;
   short _startTouch;
-  Fader(byte analogPin, byte touchPin, Motor* motor);
+  Fader(byte analogPin, byte touchPin, Motor *motor); // , Motor* motor
   short readAnalog();
   short readTouch();
   short update();
