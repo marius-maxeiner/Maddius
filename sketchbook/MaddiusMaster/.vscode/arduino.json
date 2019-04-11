@@ -1,0 +1,8 @@
+{
+    "sketch": "MaddiusMaster.ino",
+    "port": "COM5",
+    "board": "Teensy 3.6",
+    "output": "../build",
+    "debugger": "jlink",
+    "prebuild": "bash prebuild.sh"
+}

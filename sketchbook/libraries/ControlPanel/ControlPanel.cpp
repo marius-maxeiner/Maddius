@@ -74,6 +74,7 @@ Fader::Fader(byte analogPin, byte touchPin, Motor *motor)//  byte motorUpPin, by
     _valueTarget = 0;
     // _lastValues = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     _lastValueCount = 0;
+    _startTouch = readTouch();
 }
 
 short Fader::readAnalog()
@@ -83,13 +84,17 @@ short Fader::readAnalog()
 
 short Fader::readTouch()
 {
-    return touchRead(_touchPin);
+/*     #if CHIPSET == ARDUINO_NANO
+       return 0;
+    #else */
+        return touchRead(_touchPin);
+   // #endif
 }
 
 short Fader::update()
 {
     int touchValue = readTouch();
-    _touched = touchValue > 2050;
+    _touched = touchValue > _startTouch + 300;
     int newValue = 0;
     // int newMid = 0;
     int sum = 0;
@@ -125,19 +130,23 @@ short Fader::update()
     }
 
     // MOTOR
-    if (_valueTarget <= newValue + 10
-        && _valueTarget >= newValue - 10){
+    if(!_humanChanged){
+        
+    }
+    if ((_valueTarget <= newValue + 20
+        && _valueTarget >= newValue - 20) || _humanChanged){
         _motor->motorStop();
-    }else{
+    }else if (!_humanChanged){
         int distance = abs(_valueTarget - newValue);
-        Serial.println("N");
+/*         Serial.println("N");
         Serial.println(newValue);
         Serial.println(_valueTarget);
-        Serial.println(distance);
-        int speed = map(distance, 0, 1023, 135, 255);
-        Serial.println(speed);
+        Serial.println(distance); */
+        int speed = 140;
+        // map(distance, 0, 1023, 130, 255);
+        // Serial.println(speed);
         _motor->setSpeed(speed);
-        /*if(distance > 500){
+        if(distance > 500){
             _motor->setSpeed(255);
         }else if(distance > 400){
             _motor->setSpeed(200);
@@ -149,7 +158,7 @@ short Fader::update()
             _motor->setSpeed(140);
         }else{
             _motor->setSpeed(140);
-        }*/
+        }
         if (newValue > _valueTarget) {
             //_motor->setSpeed(180);
             _motor->motorDown();

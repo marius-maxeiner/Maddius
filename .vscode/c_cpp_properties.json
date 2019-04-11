@@ -1,0 +1,26 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceRoot}",
+                "${config:arduino.path}/hardware/tools/avr/avr/include",
+                "${config:arduino.path}/hardware/arduino/avr/cores/arduino",
+                "${config:arduino.path}/hardware/arduino/avr/libraries/EEPROM/src",
+                "${config:arduino.path}/hardware/tools/avr/lib/gcc/avr/4.9.2/include",
+                "${config:arduino.path}/hardware/tools/avr/lib/gcc/avr/4.9.2/include-fixed"
+            ],
+            "browse": {
+                "limitSymbolsToIncludedHeaders": false,
+                "path": [
+                    "${workspaceRoot}"
+                ]
+            },
+            "intelliSenseMode": "msvc-x64",
+            "cppStandard": "c++11",
+            "compilerPath": "/usr/bin/clang",
+            "cStandard": "c11"
+        }
+    ],
+    "version": 4
+}

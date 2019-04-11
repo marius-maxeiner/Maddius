@@ -154,18 +154,14 @@ class Fader{
   short _valueTarget;
   bool _touched;
   bool _humanChanged;
+  short _startTouch;
   Fader(byte analogPin, byte touchPin, Motor* motor);
   short readAnalog();
   short readTouch();
   short update();
-  void motorUp();
-  void motorDown();
-  void motorStop();
   short _updateCount;
   byte _analogPin;
   byte _touchPin;
-  byte _motorUpPin;
-  byte _motorDownPin;
 };
 
 /*

@@ -13,8 +13,10 @@
 Button button1(49);
 Button button2(50);
 Button button3(51);
+Button button4(52);
 // Fader fader1(10, 30, new MotorA(3, 4, 2));
-Fader fader1(10, 30, new MotorPWM(2, 3));
+Fader fader1(A0, 15, new MotorPWM(2, 3));
+Fader fader2(A2, A3, new MotorPWM(4, 5));
 int pwmCircleCount = 0;
 byte motorspeed = 0;
 
@@ -31,7 +33,6 @@ void setup() {
   if (DEVMODE) {
     pinMode(LED_BUILTIN, OUTPUT);
     pinMode(LED_BUILTIN, INPUT_PULLUP);
-    pinMode(52, OUTPUT);
     Serial.begin(57600); // start serial for output
     // Serial.println("Start Maddius Master");
   }
@@ -68,17 +69,32 @@ void timerIsr() {
 
 void loop() {
   short f1 = fader1.update();
+  
+  short f2 = fader2.update();
 
   
   short b1 = button1.update();
   short b2 = button2.update();
   short b3 = button3.update();
-  byte val = f1 / 8;
+  short b4 = button4.update();
+  byte val1 = f1 / 8;
+  byte val2 = f2 / 8;
   if (DEVMODE) {
+      //Serial.println(fader1.readAnalog());
+      //Serial.println(touchRead(15));
       if(fader1._humanChanged){
-        Serial.println("_humanChanged");
+        Serial.println("f1_humanChanged");
+        Serial.println(fader1.readTouch());
         Serial.println(f1);
-        usbMIDI.sendControlChange(12, val, 1);
+        usbMIDI.sendControlChange(12, val1, 1);
+      }
+      //Serial.println(f2);
+      if(fader2._humanChanged){
+        Serial.println("f2_humanChanged");
+        Serial.println(fader2.readTouch());
+        Serial.println(f2);
+        Serial.println(fader2._valueTarget);
+        usbMIDI.sendControlChange(13, val2, 1);
       }
       if(button1._humanChanged){
         Serial.println("button1._humanChanged");
@@ -91,9 +107,14 @@ void loop() {
         usbMIDI.sendControlChange(65, b2, 1);
       }
       if(button3._humanChanged){
-        Serial.println("button2._humanChanged");
+        Serial.println("button3._humanChanged");
         Serial.println(b3);
         usbMIDI.sendControlChange(66, b3, 1);
+      }
+      if(button4._humanChanged){
+        Serial.println("button4._humanChanged");
+        Serial.println(b4);
+        usbMIDI.sendControlChange(67, b4, 1);
       }
   }
 
@@ -181,11 +202,7 @@ void loop() {
   if(control == 12){
     fader1._valueTarget = value * 8;
   }
-  if(control == 66){
-    if(value == 127){
-      pinMode(52, INPUT_PULLUP);
-    }else {
-      pinMode(52, INPUT_PULLDOWN);
-    }
+  if(control == 13){
+    fader2._valueTarget = value * 8;
   }
  }
