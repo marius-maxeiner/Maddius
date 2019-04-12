@@ -117,24 +117,24 @@ Button button9(50);*/
 // Motor
 
 // FADER Analog / Touch
-// F1 20 / 22
-Fader fader1(20, 22, new MotorB(12, 11, 52, 19)); // , new MotorPWM(2, 3)
-// F2 21 / 23
-/*Fader fader2(21, 23);
-// F3 64 / 15
-Fader fader3(64, 15);
-// F4 65 / 16
-Fader fader4(65, 16);
-// F5 31 / 17
-Fader fader5(31, 17);
-// F6 32 / 18
-Fader fader6(32, 18);
-// F7 33 / 19
-Fader fader7(33, 19);
-// F8 66 / 29
-Fader fader8(66, 29);
-// F9 67 / 30
-Fader fader9(67, 30);*/
+// F1
+Fader fader1(31, 15, new MotorB(11, 12, 36, 33)); // , new MotorPWM(2, 3)
+// F2
+Fader fader2(32, 16, new MotorB(34, 24, 36, 33));
+// F3
+Fader fader3(A21, 17, new MotorB(25, 26, 36, 33));
+// F4
+Fader fader4(A22, 18, new MotorB(27, 28, 36, 33));
+// F5
+Fader fader5(A10, 19, new MotorB(40, 41, 36, 33));
+// F6
+Fader fader6(A11, 22, new MotorB(42, 43, 36, 33));
+// F7 
+Fader fader7(39, 23, new MotorB(44, 45, 36, 33));
+// F8
+Fader fader8(14, 29, new MotorB(46, 47, 36, 33));
+// F9
+Fader fader9(20, 30, new MotorB(48, 51, 36, 33));
 
 // Motoren PWM: 52
 // M1 12 / 11
@@ -161,7 +161,7 @@ void setup() {
   if (DEVMODE) {
     pinMode(LED_BUILTIN, OUTPUT);
     pinMode(LED_BUILTIN, INPUT_PULLUP);
-    Serial.begin(57600); // start serial for output
+    // Serial.begin(57600); // start serial for output
     // Serial.println("Start Maddius Master");
   }
 
@@ -221,6 +221,7 @@ void setup() {
   mouseTimeout++;
 } */
 void loop() {
+
   
   // BUTTON UPDATE
   short b1 = button1.update();
@@ -239,32 +240,33 @@ void loop() {
 
 
   short f1 = fader1.update();
+          //Serial.println("f1_humanChanged");
+        //Serial.println(fader1.readTouch());
 
 
 
-
-  /*short f2 = fader2.update();
+  short f2 = fader2.update();
   short f3 = fader3.update();
   short f4 = fader4.update();
   short f5 = fader5.update();
   short f6 = fader6.update();
   short f7 = fader7.update();
   short f8 = fader8.update();
-  short f9 = fader9.update();*/
+  short f9 = fader9.update();
 
   
 
   byte val1 = f1 / 8;
-  /*byte val2 = f2 / 8;
+  byte val2 = f2 / 8;
   byte val3 = f3 / 8;
   byte val4 = f4 / 8;
   byte val5 = f5 / 8;
   byte val6 = f6 / 8;
   byte val7 = f7 / 8;
   byte val8 = f8 / 8;
-  byte val9 = f9 / 8;*/
+  byte val9 = f9 / 8;
   
-  if (DEVMODE) {
+  /*if (DEVMODE) {
       //Serial.println(fader1.readAnalog());
       //Serial.println(touchRead(15));
 
@@ -321,21 +323,21 @@ void loop() {
 
 
       // FADER 
-      if(fader1._humanChanged){
+      /*if(fader1._humanChanged){
         Serial.println("f1_humanChanged");
         Serial.println(fader1.readTouch());
         // Serial.println(f1);
         Serial.println(fader1.readAnalog());
         usbMIDI.sendControlChange(12, val1, 1);
       }
-      /*if(fader2._humanChanged){
+     if(fader2._humanChanged){
         Serial.println("f2_humanChanged");
         Serial.println(fader2.readTouch());
         Serial.println(f2);
         Serial.println(fader2._valueTarget);
         usbMIDI.sendControlChange(13, val2, 1);
-      }*/
-      /*if(fader3._humanChanged){
+      }
+      if(fader3._humanChanged){
         Serial.println("f3_humanChanged");
         Serial.println(fader3.readTouch());
         Serial.println(f3);
@@ -383,7 +385,7 @@ void loop() {
         Serial.println(f9);
         Serial.println(fader9._valueTarget);
         usbMIDI.sendControlChange(20, val9, 1);
-      }*/
+      }
   }
 
   // value += encoder->getValue();
@@ -424,6 +426,34 @@ void loop() {
   Serial.print(x);
   Serial.print(" Y: ");
   Serial.println(y);*/
+  if(fader1._humanChanged){
+  usbMIDI.sendControlChange(12, val1, 1);
+  }
+  if(fader2._humanChanged){
+  usbMIDI.sendControlChange(13, val2, 1);
+  }
+  if(fader3._humanChanged){
+  usbMIDI.sendControlChange(14, val3, 1);
+  }
+  if(fader4._humanChanged){
+  usbMIDI.sendControlChange(15, val4, 1);
+  }
+  if(fader5._humanChanged){
+  usbMIDI.sendControlChange(16, val5, 1);
+  }
+  if(fader6._humanChanged){
+  usbMIDI.sendControlChange(17, val6, 1);
+  }
+  if(fader7._humanChanged){
+  usbMIDI.sendControlChange(18, val7, 1);
+  }
+  if(fader8._humanChanged){
+  usbMIDI.sendControlChange(19, val8, 1);
+  }
+  if(fader9._humanChanged){
+  usbMIDI.sendControlChange(20, val9, 1);
+  }
+
 
   // Serial.println(a1);
   // Serial.println(pos[poscount]);
@@ -470,7 +500,28 @@ void loop() {
   if(control == 12){
     fader1._valueTarget = value * 8;
   }
-  /*if(control == 13){
+  if(control == 13){
     fader2._valueTarget = value * 8;
-  }*/
+  }
+  if(control == 14){
+    fader3._valueTarget = value * 8;
+  }
+  if(control == 15){
+    fader4._valueTarget = value * 8;
+  }
+  if(control == 16){
+    fader5._valueTarget = value * 8;
+  }
+  if(control == 17){
+    fader6._valueTarget = value * 8;
+  }
+  if(control == 18){
+    fader7._valueTarget = value * 8;
+  }
+  if(control == 19){
+    fader8._valueTarget = value * 8;
+  }
+  if(control == 20){
+    fader9._valueTarget = value * 8;
+  }
  }
