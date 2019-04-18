@@ -1,0 +1,38 @@
+# Main
+_English:_
+
+ALPHA
+
+
+Maddius Main.
+
+The Maddius Main is the Heartpiece of the Maddius Family.
+
+It features 9 motorized fader, 8 Channelfader and 1 Masterfader.
+Also it comes with 8 Blind buttons and 1 blackout button.
+
+The Maddius Main works as the converter to midi, 
+the built in Teensy will controll the expansions over an i2c connection, 
+featuring around 124 address Ports. 
+This allows to connect any kind of Microcontroller with analog or digital I/O Pins. 
+Marius Main allows to be connected to other modules at the left and right side of the Case,
+its possible to connect the Modules with cable or directly by plugging them in.
+
+
+
+_German:_
+
+ALPHA
+
+
+Maddius Main.
+
+Maddius Main ist das Herzstück der Maddius Familie.
+
+Er kommt mit 9 Motorfader, 8 Channelfader und 1 Masterfader.
+Ausserdem hat er 8 Blind Knöpfe und einen Blackout Knopf.
+
+Maddius Main arbeitet als übersetzer, er nimmt die Signale der über i2c verbunenen Microcontroller 
+und wandelt sie in von Software nutzbare Midi Signale. 
+Dank der i2c Verbindung kann man um die 124 Geräte anschließen, und seinen Maddius frei anpassen.
+Es können links und rechts von Maddius Main weitere Module direkt oder mit einem Kabel verbunden werden.
